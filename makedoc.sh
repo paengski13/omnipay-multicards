@@ -6,7 +6,7 @@
 # (c) Del 2015 http://www.babel.com.au/
 #
 
-APPNAME='PairMeUp API Documentation'
+APPNAME='Omnipay/MultiCards API Documentation'
 CMDFILE=apigen.cmd.$$
 DESTDIR=./documents
 SRCDIRS="src"
