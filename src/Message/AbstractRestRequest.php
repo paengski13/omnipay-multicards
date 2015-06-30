@@ -10,6 +10,12 @@ namespace Omnipay\Multicards\Message;
  *
  * This is the parent class for all Multicards REST requests.
  *
+ * ### Parameters Required for All Requests
+ *
+ * * merId             [required] - Merchant ID
+ * * password          [required] - Merchant password
+ * * merlUrlIdx        [required] - Page id in the MultiCards database.
+ *
  * @see \Omnipay\Multicards\Gateway
  * @link https://www.multicards.com/
  */
@@ -146,10 +152,11 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      */
     public function getData()
     {
-        $this->validate('merId', 'password');
+        $this->validate('merId', 'password', 'merlUrlIdx');
         $data = array(
             'mer_id'            => $this->getMerId(),
             'password'          => $this->getPassword(),
+            'merl_url_idx'      => $this->getMerUrlIdx(),
             'client_ip'         => $this->getClientIp(),
         );
         return $data;

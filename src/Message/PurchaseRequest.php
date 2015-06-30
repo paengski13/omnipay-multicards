@@ -51,12 +51,10 @@ namespace Omnipay\MultiCards\Message;
  *
  *   // Do a purchase transaction on the gateway
  *   $transaction = $gateway->purchase(array(
- *       'amount'                    => '10.00',
- *       'accountId'                 => 12341234,
- *       'currency'                  => 'AUD',
  *       'clientIp'                  => '127.0.0.1',
- *       'packageId'                 => 1234,
- *       'packageName'               => 'Super Deluxe Excellent Discount Package',
+ *       'amount'                    => '10.00',
+ *       'currency'                  => 'AUD',
+ *       'description'               => 'Super Deluxe Excellent Discount Package',
  *       'card'                      => $card,
  *   ));
  *   $response = $transaction->send();
@@ -73,38 +71,39 @@ namespace Omnipay\MultiCards\Message;
  *
  * ### Parameters
  *
- * * SiteKey           [required] - public key for the site
- * * accountId         [required] -
  * * clientIp          [required] - ip address of the user making a payment
- * * email             [required] - Email where customer wishes to receive receipt.
- * * packageId         [required] -
- * * packageName       [required] -
  * * amount            [required] -
  * * currency          [required] - ISO 4217 to charge in
- * * notifyUrl         [optional] - URL of the calling system where a notify POST call can be made.
- *
- * #### For credit card token payments
- *
- * * cardReference     [required] - Authorization Token. Used in lieu of credit card information
+ * * description       [required] - description of the purchase
  *
  * #### For credit card payments
  *
  * * card              [required] - Credit card details as an Omnipay CreditCard object
  *
- * #### For redirect payments (PayPal, UnionPay, AliPay)
+ * #### For credit card token payments
+ *
+ * Card token payments are not supported.
+ *
+ * #### For redirect payments
+ *
+ * These are not yet supported by this gateway plugin.
  *
  * * returnUrl         [required] - URL that the customer is sent to to notify of a successful payment
  * * cancelUrl         [required] - URL that the customer is sent to to notify of a failed payment
- * * paymentSchema     [required] - one of PP UP or AP
  * * billingCountry    [required]
  * * email             [required]
  * * billingPhone      [required]
  *
  * ### Test Payments
  *
- * Test payments can be performed by setting a testMode parameter to any
- * value that PHP evaluates as true and using card numbers that the downstream
- * gateway uses as its own test card numbers.
+ * Once you are logged in, in the merchant menu go to the desktop screen
+ * and click on "Test order page". Enable a test credit card code and
+ * follow the instructions to run a test order with a test credit card.
+ *
+ * Make sure that you post your own IP address in the client_ip variable,
+ * and that your IP is white listed in the test code.
+ *
+ * Test card codes expire 60 minutes after being enabled.
  *
  * @see Omnipay\MultiCards\Gateway
  */
