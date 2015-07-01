@@ -13,8 +13,8 @@ use Omnipay\Common\AbstractGateway;
  * MultiCards Internet Billing is a provider of online credit card and debit
  * card processing and payment solutions to many retailers worldwide.
  *
- * MultiCards is a registered tradename of PM International BV, Chamber of
- * Commerce Eindhoven 17131862, VAT Number NL809335141B01, an independant
+ * MultiCards is a registered trade name of PM International BV, Chamber of
+ * Commerce Eindhoven 17131862, VAT Number NL809335141B01, an independent
  * business unit of De Postel Beheer BV, Eindhoven, The Netherlands.
  *
  * ### Example
