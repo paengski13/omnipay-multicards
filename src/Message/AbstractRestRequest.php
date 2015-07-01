@@ -18,6 +18,7 @@ namespace Omnipay\Multicards\Message;
  *
  * @see \Omnipay\Multicards\Gateway
  * @link https://www.multicards.com/
+ * @link https://www.multicards.com/en/support/merchant_integration_guide.html
  */
 abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractRequest
 {
@@ -27,6 +28,18 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      * @var string URL
      */
     protected $endpoint = 'https://secure.multicards.com/cgi-bin/';
+
+    /**
+     * Get HTTP Method.
+     *
+     * This is nearly always POST but can be over-ridden in sub classes.
+     *
+     * @return string
+     */
+    protected function getHttpMethod()
+    {
+        return 'POST';
+    }
 
     /**
      * Get Merchant ID
@@ -152,7 +165,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
      */
     public function getData()
     {
-        $this->validate('merId', 'password', 'merlUrlIdx');
+        $this->validate('merId', 'password', 'merUrlIdx');
         $data = array(
             'mer_id'            => $this->getMerId(),
             'password'          => $this->getPassword(),
@@ -195,15 +208,21 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
             );
         }
 
+        // Get the HTTP response and the body, and parse the body text into the data array
+        $httpResponse = $httpRequest->send();
+        $body_text = $httpResponse->getBody(true);
+        $body_data = [];
+        parse_str($body_text, $body_data);
+
         // Might be useful to have some debug code here.  Perhaps hook to whatever
         // logging engine is being used.
         # $handle = fopen('debug.txt', 'a');
         # fwrite($handle, "Data == " . print_r($data, true) . "\n");
-
-        $httpResponse = $httpRequest->send();
-        # fwrite($handle, "Response == " . print_r($httpResponse, true) . "\n");
+        # fwrite($handle, "Response == " . print_r($httpResponse, true) . "\n\n");
+        # fwrite($handle, "Response Body Text:\n\n" . $body_text . "\n");
+        # fwrite($handle, "Response Body Data:\n\n" . print_r($body_data, true) . "\n");
         # fclose($handle);
 
-        return $this->response = new RestResponse($this, $httpResponse->json(), $httpResponse->getStatusCode());
+        return $this->response = new RestResponse($this, $body_data, $httpResponse->getStatusCode());
     }
 }

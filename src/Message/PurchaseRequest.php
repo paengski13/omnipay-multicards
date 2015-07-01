@@ -3,7 +3,7 @@
  * MultiCards REST Purchase Request
  */
 
-namespace Omnipay\MultiCards\Message;
+namespace Omnipay\Multicards\Message;
 
 /**
  * MultiCards REST Purchase Request using the Order API
@@ -19,12 +19,14 @@ namespace Omnipay\MultiCards\Message;
  * <code>
  *   // Create a gateway for the MultiCards REST Gateway
  *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('MultiCards');
+ *   $gateway = Omnipay::create('Multicards');
  *
  *   // Initialise the gateway
  *   $gateway->initialize(array(
- *       'siteKey'      => '1234asdf1234asdf',
- *       'testMode'     => true, // Or false when you are ready for live transactions
+ *       'merId'     => '12341234',
+ *       'password'  => 'thisISmyPASSWORD',
+ *       'merUrlIdx' => 1,
+ *       'testMode'  => true, // Or false when you are ready for live transactions
  *   ));
  * </code>
  *
@@ -106,6 +108,8 @@ namespace Omnipay\MultiCards\Message;
  * Test card codes expire 60 minutes after being enabled.
  *
  * @see Omnipay\MultiCards\Gateway
+ * @link https://www.multicards.com/en/support/merchant_integration_guide.html#orderapi
+ * @link https://www.multicards.com/en/support/orderpage-card-customer-variables.html
  */
 class PurchaseRequest extends AbstractRestRequest
 {
@@ -122,14 +126,28 @@ class PurchaseRequest extends AbstractRestRequest
         // An amount parameter is required, as is a currency.
         $this->validate('amount', 'currency', 'description');
         $data = parent::getData();
-        $data['item_1_desc']  = $this->getDescription();
-        $data['item_1_price'] = $this->getAmount();
-        $data['item_1_qty']   = 1;
-        $data['valuta_code']  = $this->getCurrency();
 
+        // Some predefined variables that need to be set
+        $data['next_phase']         = 'paydata';
+        $data['agree2terms']        = '1';
+
+        // Send through the charge amount and description, we will always set
+        // the qty to 1
+        $data['item1_desc']         = $this->getDescription();
+        $data['item1_price']        = $this->getAmount();
+        $data['item1_qty']          = 1;
+        $data['valuta_code']        = $this->getCurrency();
+
+        // MultiCards only supports card payments, not token payments.  A card
+        // is required for all payments.
         $this->validate('card');
         $card = $this->getCard();
-        $card->validate();
+
+        // Test Payments in particular use a card number that does not
+        // validate against the Luhn algorithm, so don't validate the card.
+        // $card->validate();
+
+        /// Card data passed through
         $data['cust_name']          = $card->getName();
         $data['cust_address1']      = $card->getBillingAddress1();
         $data['cust_city']          = $card->getBillingCity();

@@ -22,7 +22,7 @@ use Omnipay\Common\AbstractGateway;
  * <code>
  *   // Create a gateway for the Multicards REST Gateway
  *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('MulticardsGateway');
+ *   $gateway = Omnipay::create('Multicards');
  *
  *   // Initialise the gateway
  *   $gateway->initialize(array(
@@ -34,18 +34,18 @@ use Omnipay\Common\AbstractGateway;
  *
  *   // Create a credit card object
  *   $card = new CreditCard(array(
- *               'firstName'    => 'Example',
- *               'lastName'     => 'Customer',
- *               'number'       => '4200000000000000',
- *               'expiryMonth'  => '01',
- *               'expiryYear'   => '2020',
- *               'cvv'          => '123',
- *               'email'        => 'customer@example.com',
- *               'billingAddress1'       => '1 Scrubby Creek Road',
- *               'billingCountry'        => 'AU',
- *               'billingCity'           => 'Scrubby Creek',
- *               'billingPostcode'       => '4999',
- *               'billingState'          => 'QLD',
+ *               'firstName'            => 'Example',
+ *               'lastName'             => 'Customer',
+ *               'number'               => '4222222222222222',
+ *               'expiryMonth'          => '01',
+ *               'expiryYear'           => '2020',
+ *               'cvv'                  => '123',
+ *               'email'                => 'customer@example.com',
+ *               'billingAddress1'      => '1 Scrubby Creek Road',
+ *               'billingCountry'       => 'AU',
+ *               'billingCity'          => 'Scrubby Creek',
+ *               'billingPostcode'      => '4999',
+ *               'billingState'         => 'QLD',
  *   ));
  *
  *   // Do a purchase transaction on the gateway
@@ -64,8 +64,16 @@ use Omnipay\Common\AbstractGateway;
  *   }
  * </code>
  *
+ * ### Quirks
+ *
+ * There is no createCard message in this gateway.  Token purchases are not
+ * supported.
+ *
+ * Voids are not supported, only refunds are supported.
+ *
  * @see \Omnipay\Common\AbstractGateway
  * @link https://www.multicards.com/
+ * @link https://www.multicards.com/en/support/merchant_integration_guide.html
  */
 class Gateway extends AbstractGateway
 {
