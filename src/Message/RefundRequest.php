@@ -32,6 +32,11 @@ namespace Omnipay\Multicards\Message;
  *   }
  * </code>
  *
+ * Quirks:
+ *
+ * * Test transactions cannot be refunded through the API.  They can only be refunded
+ *   through the Merchant Desktop.
+ * 
  * @see PurchaseRequest
  * @see Omnipay\Multicards\Gateway
  * @link https://www.multicards.com/en/support/merchant_integration_guide.html#refundapi
