@@ -107,7 +107,7 @@ namespace Omnipay\Multicards\Message;
  *
  * Test card codes expire 60 minutes after being enabled.
  *
- * @see Omnipay\MultiCards\Gateway
+ * @see Omnipay\Multicards\Gateway
  * @link https://www.multicards.com/en/support/merchant_integration_guide.html#orderapi
  * @link https://www.multicards.com/en/support/orderpage-card-customer-variables.html
  */

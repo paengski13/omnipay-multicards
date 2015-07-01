@@ -35,11 +35,19 @@ class RestResponse extends AbstractResponse
         if (! empty($this->data['error'])) {
             return false;
         }
-        
+
         if (! empty($this->data['response_code']) && $this->data['response_code'] > 1) {
             return false;
         }
-        
+
+        // Special case for refunds where response_code 1 means error
+        if (! empty($this->data['response_code']) &&
+            $this->data['response_code'] == '001' &&
+            ! empty($this->data['response_text']) &&
+            strpos($this->data['response_text'], 'invalid MerchantID') > 0) {
+            return false;
+        }
+
         return true;
     }
 
@@ -60,6 +68,9 @@ class RestResponse extends AbstractResponse
     {
         if (isset($this->data['error'])) {
             return $this->data['error'];
+        }
+        if (isset($this->data['response_text'])) {
+            return $this->data['response_text'];
         }
         return null;
     }
