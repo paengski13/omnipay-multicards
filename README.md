@@ -16,7 +16,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "delatbabel/omnipay-paymentwall": "dev-master"
+        "incube8/omnipay-multicards": "dev-master"
     }
 }
 ```
@@ -31,7 +31,7 @@ And run composer to update your dependencies:
 The following transactions are provided by this package via the REST API:
 
 * Create a purchase
-* Voiding a purchase
+* Refunding a purchase
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.  There are also examples in the class API documentation.
@@ -47,18 +47,13 @@ Required fields when making a purchase include:
 
 * amount
 * currency
-* accountId (customer account ID on your system)
 * description
-* clientIp
-* browserDomain
+* merId
+* merUrlIdx
+* password
 
-Optional fields:
-
-* packageId (account id will be used if this is not set)
-* packageName (description will be used if this is not set)
-
-For a card purchase, an Omnipay CreditCard object can be provided containing
-the card data.
+An Omnipay CreditCard object can be provided containing the card data.  MultiCards does not
+support token purchases so you cannot pass a cardReference.
 
 ## Unit Testing
 
