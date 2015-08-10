@@ -138,29 +138,36 @@ class PurchaseRequest extends AbstractRestRequest
         $data['item1_qty']          = 1;
         $data['valuta_code']        = $this->getCurrency();
 
-        // MultiCards only supports card payments, not token payments.  A card
-        // is required for all payments.
-        $this->validate('card');
-        $card = $this->getCard();
+        // MultiCards supports card or token payments
+        if ($this->getCardReference()) {
+            $data['token_id'] = $this->getCardReference();
+        } else {
+            $this->validate('card');
+            $card = $this->getCard();
 
-        // Test Payments in particular use a card number that does not
-        // validate against the Luhn algorithm, so don't validate the card.
-        // $card->validate();
+            // Test Payments in particular use a card number that does not
+            // validate against the Luhn algorithm, so don't validate the card.
+            // $card->validate();
 
-        /// Card data passed through
-        $data['cust_name']          = $card->getName();
-        $data['cust_address1']      = $card->getBillingAddress1();
-        $data['cust_city']          = $card->getBillingCity();
-        $data['cust_state']         = $card->getBillingState();
-        $data['cust_zip']           = $card->getBillingPostcode();
-        $data['cust_phone']         = $card->getBillingPhone();
-        $data['cust_email']         = $card->getEmail();
-        $data['cust_country']       = $card->getBillingCountry();
+            /// Card data passed through
+            $data['cust_name']          = $card->getName();
+            $data['cust_address1']      = $card->getBillingAddress1();
+            $data['cust_city']          = $card->getBillingCity();
+            $data['cust_state']         = $card->getBillingState();
+            $data['cust_zip']           = $card->getBillingPostcode();
+            $data['cust_phone']         = $card->getBillingPhone();
+            $data['cust_email']         = $card->getEmail();
+            $data['cust_country']       = $card->getBillingCountry();
 
-        $data['card_num']           = $card->getNumber();
-        $data['card_name']          = $card->getName();
-        $data['card_exp']           = $card->getExpiryDate('m/y');
-        $data['card_code']          = $card->getCvv();
+            $data['card_num']           = $card->getNumber();
+            $data['card_name']          = $card->getName();
+            $data['card_exp']           = $card->getExpiryDate('m/y');
+            $data['card_code']          = $card->getCvv();
+
+            // This requests a token_id to be returned with the response so that
+            // the card reference can be used next time.
+            $data['req_trans_token']    = '1';
+        }
 
         return $data;
     }

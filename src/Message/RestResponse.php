@@ -31,7 +31,7 @@ class RestResponse extends AbstractResponse
         if ($this->getCode() >= 400) {
             return false;
         }
-        
+
         if (! empty($this->data['error'])) {
             return false;
         }
@@ -59,6 +59,25 @@ class RestResponse extends AbstractResponse
         }
         if (! empty($this->data['order_num'])) {
             return $this->data['order_num'];
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the card reference
+     *
+     * Where a card is provided when a purchase is made, and the variable req_trans_token
+     * is sent with the payment, a card reference is returned as part of the response, in
+     * the token_id entry.
+     *
+     * @return string
+     */
+    public function getCardReference()
+    {
+        // This is correct for payments
+        if (! empty($this->data['token_id'])) {
+            return $this->data['token_id'];
         }
 
         return null;

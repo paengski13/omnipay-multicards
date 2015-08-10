@@ -169,7 +169,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         $data = array(
             'mer_id'            => $this->getMerId(),
             'password'          => $this->getPassword(),
-            'merl_url_idx'      => $this->getMerUrlIdx(),
+            'mer_url_idx'       => $this->getMerUrlIdx(),
             'client_ip'         => $this->getClientIp(),
         );
         return $data;
