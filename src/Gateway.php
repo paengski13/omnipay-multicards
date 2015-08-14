@@ -222,4 +222,16 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Multicards\Message\RefundRequest', $parameters);
     }
+
+    /**
+     * Create a void request.
+     *
+     * @param array $parameters
+     * @return \Omnipay\Multicards\Message\VoidRequest
+     */
+
+    public function void(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Multicards\Message\VoidRequest', $parameters);
+    }
 }

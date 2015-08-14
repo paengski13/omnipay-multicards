@@ -1,16 +1,15 @@
 <?php
 /**
- * MultiCards REST Refund Request
+ * MultiCards REST Void Request
  */
 
 namespace Omnipay\Multicards\Message;
 
 /**
- * MultiCards REST Refund Request
+ * MultiCards REST Void Request
  *
- * In order to refund a purchase you must submit the following details:
+ * In order to void a purchase you must submit the following details:
  *
- * * amount (numerical)
  * * transactionReference (The Transaction reference of the original transaction to be refunded)
  *
  * Example -- note this example assumes that the purchase has been successful
@@ -19,30 +18,23 @@ namespace Omnipay\Multicards\Message;
  *
  * <code>
  *   // Do a refund transaction on the gateway
- *   $transaction = $gateway->refund(array(
- *       'amount'                   => '10.00',
+ *   $transaction = $gateway->void(array(
  *       'transactionReference'     => $sale_id,
  *       'description'              => 'Product out of stock',
  *   ));
  *   $response = $transaction->send();
  *   if ($response->isSuccessful()) {
- *       echo "Refund transaction was successful!\n";
+ *       echo "Void transaction was successful!\n";
  *       $refund_id = $response->getTransactionReference();
  *       echo "Transaction reference = " . $refund_id . "\n";
  *   }
  * </code>
  *
- * Quirks:
- *
- * * Test transactions cannot be refunded through the API.  They can only be refunded
- *   through the Merchant Desktop.  Test transactions can be voided (full refund).
- *
  * @see PurchaseRequest
- * @see VoidRequest
  * @see Omnipay\Multicards\Gateway
  * @link https://www.multicards.com/en/support/merchant_integration_guide.html#refundapi
  */
-class RefundRequest extends AbstractRestRequest
+class VoidRequest extends AbstractRestRequest
 {
     public function getData()
     {
@@ -50,13 +42,7 @@ class RefundRequest extends AbstractRestRequest
         $data = parent::getData();
         $data['trans_id']   = $this->getTransactionReference();
         $data['reason']     = $this->getDescription();
-
-        if ($this->getAmount()) {
-            $data['action'] = 'partial.credit';
-            $data['amount'] = $this->getAmount();
-        } else {
-            $data['action'] = 'credit';
-        }
+        $data['action'] = 'credit';
 
         return $data;
     }
@@ -64,7 +50,7 @@ class RefundRequest extends AbstractRestRequest
     /**
      * Get transaction endpoint.
      *
-     * Refunds are created using the /purchases resource.
+     * Voids are created using the /purchases resource.
      *
      * @return string
      */

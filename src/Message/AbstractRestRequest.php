@@ -216,12 +216,12 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
 
         // Might be useful to have some debug code here.  Perhaps hook to whatever
         // logging engine is being used.
-        # $handle = fopen('debug.txt', 'a');
-        # fwrite($handle, "Data == " . print_r($data, true) . "\n");
+        $handle = fopen('debug.txt', 'a');
+        fwrite($handle, "Data == " . print_r($data, true) . "\n");
         # fwrite($handle, "Response == " . print_r($httpResponse, true) . "\n\n");
-        # fwrite($handle, "Response Body Text:\n\n" . $body_text . "\n");
-        # fwrite($handle, "Response Body Data:\n\n" . print_r($body_data, true) . "\n");
-        # fclose($handle);
+        fwrite($handle, "Response Body Text:\n\n" . $body_text . "\n");
+        fwrite($handle, "Response Body Data:\n\n" . print_r($body_data, true) . "\n");
+        fclose($handle);
 
         return $this->response = new RestResponse($this, $body_data, $httpResponse->getStatusCode());
     }

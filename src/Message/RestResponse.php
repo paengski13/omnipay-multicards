@@ -32,10 +32,6 @@ class RestResponse extends AbstractResponse
             return false;
         }
 
-        if (! empty($this->data['error'])) {
-            return false;
-        }
-
         if (! empty($this->data['response_code']) && $this->data['response_code'] > 1) {
             return false;
         }
@@ -57,10 +53,6 @@ class RestResponse extends AbstractResponse
         if (! empty($this->data['trans_id'])) {
             return $this->data['trans_id'];
         }
-        if (! empty($this->data['order_num'])) {
-            return $this->data['order_num'];
-        }
-
         return null;
     }
 
@@ -85,9 +77,6 @@ class RestResponse extends AbstractResponse
 
     public function getMessage()
     {
-        if (isset($this->data['error'])) {
-            return $this->data['error'];
-        }
         if (isset($this->data['response_text'])) {
             return $this->data['response_text'];
         }
@@ -96,6 +85,9 @@ class RestResponse extends AbstractResponse
 
     public function getCode()
     {
+        if (isset($this->data['response_code'])) {
+            return $this->data['response_code'];
+        }
         return $this->statusCode;
     }
 }
