@@ -32,16 +32,15 @@ The following transactions are provided by this package via the REST API:
 
 * Create a purchase
 * Refunding a purchase
+* Voiding a purchase
 
 For general usage instructions, please see the main [Omnipay](https://github.com/thephpleague/omnipay)
 repository.  There are also examples in the class API documentation.
 
 ### Quirks
 
-There is no createCard message in this gateway.  Token purchases are not
-supported.
-
-Voids are not supported, only refunds are supported.
+There is no createCard message in this gateway.  Tokens are supported by calling getCardReference()
+on a purchase result.
 
 Required fields when making a purchase include:
 
@@ -52,8 +51,9 @@ Required fields when making a purchase include:
 * merUrlIdx
 * password
 
-An Omnipay CreditCard object can be provided containing the card data.  MultiCards does not
-support token purchases so you cannot pass a cardReference.
+An Omnipay CreditCard object can be provided containing the card data, or you can pass a cardReference
+parameter to make a token purchase after making a previously successful card purchase and getting the
+token as a response to that.
 
 ## Unit Testing
 
