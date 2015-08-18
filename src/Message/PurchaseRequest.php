@@ -174,16 +174,16 @@ class PurchaseRequest extends AbstractRestRequest
     }
 
     /**
-     * Get the user1 variable -- used in every purchase request
-     * The user1 variable is an optional variable we can use to send
-     * a value we needed to be returned during callbacks [IPN]
-     * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
-     *
-     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
-     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
-     *
-     * @return string
-     */
+ * Get the user1 variable -- used in every purchase request
+ * The user1 variable is an optional variable we can use to send
+ * a value we needed to be returned during callbacks [IPN]
+ * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
+ *
+ * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+ * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+ *
+ * @return string
+ */
     public function getUserOne()
     {
         return $this->getParameter('user1');
@@ -203,6 +203,38 @@ class PurchaseRequest extends AbstractRestRequest
     public function setUserOne($value)
     {
         return $this->setParameter('user1', $value);
+    }
+
+    /**
+     * Get the user2 variable -- used in every purchase request
+     * The user2 variable is an optional variable we can use to send
+     * a value we needed to be returned during callbacks [IPN]
+     * For this case, use2pay uses this to send the site_short_code as identifier for it's callbacks.
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return string
+     */
+    public function getUserTwo()
+    {
+        return $this->getParameter('user2');
+    }
+
+    /**
+     * Get the user2 variable -- used in every purchase request
+     * The user2 variable is an optional variable we can use to send
+     * a value we needed to be returned during callbacks [IPN]
+     * For this case, use2pay uses this to send the site_short_code as identifier for it's callbacks.
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return Gateway provides a fluent interface.
+     */
+    public function setUserTwo($value)
+    {
+        return $this->setParameter('user2', $value);
     }
 
     /**
