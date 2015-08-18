@@ -137,6 +137,7 @@ class PurchaseRequest extends AbstractRestRequest
         $data['item1_price']        = $this->getAmount();
         $data['item1_qty']          = 1;
         $data['valuta_code']        = $this->getCurrency();
+        $data['user1']              = $this->getUserOne();
 
         // MultiCards supports card or token payments
         if ($this->getCardReference()) {
@@ -170,6 +171,38 @@ class PurchaseRequest extends AbstractRestRequest
         }
 
         return $data;
+    }
+
+    /**
+     * Get the user1 variable -- used in every purchase request
+     * The user1 variable is an optional variable we can use to send
+     * a value we needed to be returned during callbacks [IPN]
+     * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return string
+     */
+    public function getUserOne()
+    {
+        return $this->getParameter('user1');
+    }
+
+    /**
+     * Set the user1 variable -- used in every purchase request
+     * The user1 variable is an optional variable we can use to send
+     * a value we needed to be returned during callbacks [IPN]
+     * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return Gateway provides a fluent interface.
+     */
+    public function setUserOne($value)
+    {
+        return $this->setParameter('user1', $value);
     }
 
     /**
