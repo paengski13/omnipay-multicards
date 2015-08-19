@@ -138,6 +138,7 @@ class PurchaseRequest extends AbstractRestRequest
         $data['item1_qty']          = 1;
         $data['valuta_code']        = $this->getCurrency();
         $data['user1']              = $this->getUserOne();
+        $data['user2']              = $this->getUserTwo();
 
         // MultiCards supports card or token payments
         if ($this->getCardReference()) {
