@@ -214,6 +214,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         $body_data = [];
         parse_str($body_text, $body_data);
 
+        /*
         // Might be useful to have some debug code here.  Perhaps hook to whatever
         // logging engine is being used.
         $handle = fopen('debug.txt', 'a');
@@ -222,6 +223,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         fwrite($handle, "Response Body Text:\n\n" . $body_text . "\n");
         fwrite($handle, "Response Body Data:\n\n" . print_r($body_data, true) . "\n");
         fclose($handle);
+        */
 
         return $this->response = new RestResponse($this, $body_data, $httpResponse->getStatusCode());
     }
