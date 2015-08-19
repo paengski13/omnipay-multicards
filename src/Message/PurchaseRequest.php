@@ -137,8 +137,8 @@ class PurchaseRequest extends AbstractRestRequest
         $data['item1_price']        = $this->getAmount();
         $data['item1_qty']          = 1;
         $data['valuta_code']        = $this->getCurrency();
-        $data['user1']              = $this->getUserOne();
-        $data['user2']              = $this->getUserTwo();
+        $data['user1']              = $this->getUser1();
+        $data['user2']              = $this->getUser2();
 
         // MultiCards supports card or token payments
         if ($this->getCardReference()) {
@@ -185,7 +185,7 @@ class PurchaseRequest extends AbstractRestRequest
  *
  * @return string
  */
-    public function getUserOne()
+    public function getUser1()
     {
         return $this->getParameter('user1');
     }
@@ -201,7 +201,7 @@ class PurchaseRequest extends AbstractRestRequest
      *
      * @return Gateway provides a fluent interface.
      */
-    public function setUserOne($value)
+    public function setUser1($value)
     {
         return $this->setParameter('user1', $value);
     }
@@ -217,7 +217,7 @@ class PurchaseRequest extends AbstractRestRequest
      *
      * @return string
      */
-    public function getUserTwo()
+    public function getUser2()
     {
         return $this->getParameter('user2');
     }
@@ -233,7 +233,7 @@ class PurchaseRequest extends AbstractRestRequest
      *
      * @return Gateway provides a fluent interface.
      */
-    public function setUserTwo($value)
+    public function setUser2($value)
     {
         return $this->setParameter('user2', $value);
     }
