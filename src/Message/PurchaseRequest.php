@@ -231,7 +231,7 @@ class PurchaseRequest extends AbstractRestRequest
      * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
      * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
      *
-     * @return Gateway provides a fluent interface.
+     * @return PurchaseRequest provides a fluent interface.
      */
     public function setUser1($value)
     {
@@ -265,7 +265,7 @@ class PurchaseRequest extends AbstractRestRequest
      * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
      * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
      *
-     * @return Gateway provides a fluent interface.
+     * @return PurchaseRequest provides a fluent interface.
      */
     public function setDynDesc($value)
     {
@@ -299,7 +299,7 @@ class PurchaseRequest extends AbstractRestRequest
      * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
      * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
      *
-     * @return Gateway provides a fluent interface.
+     * @return PurchaseRequest provides a fluent interface.
      */
     public function setUser2($value)
     {
