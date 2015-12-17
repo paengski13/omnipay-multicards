@@ -168,6 +168,7 @@ class PurchaseRequest extends AbstractRestRequest
         $data['valuta_code']        = $this->getCurrency();
         $data['user1']              = $this->getUser1();
         $data['user2']              = $this->getUser2();
+        $data['dyn_desc']           = $this->getDynDesc();
 
         // MultiCards supports card or token payments
         if ($this->getCardReference()) {
@@ -252,6 +253,38 @@ class PurchaseRequest extends AbstractRestRequest
     public function getUser2()
     {
         return $this->getParameter('user2');
+    }
+
+    /**
+     * Set the dyn_desc variable -- used in every purchase request
+     * The dyn_desc variable is an optional variable we can use to send during purchase request
+     * This should be the uppercase version of the site short code
+     * This will be added to the customer's card statement after 2BuySafe.com/
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return Gateway provides a fluent interface.
+     */
+    public function setDynDesc($value)
+    {
+        return $this->setParameter('dyn_desc', $value);
+    }
+
+    /**
+     * Get the dyn_desc variable -- used in every purchase request
+     * The dyn_desc variable is an optional variable we can use to send during purchase request
+     * This should be the uppercase version of the site short code
+     * This will be added to the customer's card statement after 2BuySafe.com/
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return string
+     */
+    public function getDynDesc()
+    {
+        return $this->getParameter('dyn_desc');
     }
 
     /**
