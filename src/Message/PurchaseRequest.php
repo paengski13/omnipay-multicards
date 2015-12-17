@@ -257,6 +257,7 @@ class PurchaseRequest extends AbstractRestRequest
 
     /**
      * Set the dyn_desc variable -- used in every purchase request
+     * 
      * The dyn_desc variable is an optional variable we can use to send during purchase request
      * This should be the uppercase version of the site short code
      * This will be added to the customer's card statement after 2BuySafe.com/
@@ -273,6 +274,7 @@ class PurchaseRequest extends AbstractRestRequest
 
     /**
      * Get the dyn_desc variable -- used in every purchase request
+     *
      * The dyn_desc variable is an optional variable we can use to send during purchase request
      * This should be the uppercase version of the site short code
      * This will be added to the customer's card statement after 2BuySafe.com/
