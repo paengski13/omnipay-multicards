@@ -69,7 +69,46 @@ namespace Omnipay\Multicards\Message;
  *
  * #### Payment with Card Token
  *
- * Card tokens are not supported in MultiCards.
+ * To obtain a card reference (the cardReference parameter) a previous purchase
+ * call must be completed successfully.  After the successful completion, check
+ * the result of getCardReference on the response:
+ *
+ * <code>
+ *   // Do a purchase transaction on the gateway
+ *   $transaction = $gateway->purchase(array(
+ *       'clientIp'                  => '127.0.0.1',
+ *       'amount'                    => '10.00',
+ *       'currency'                  => 'AUD',
+ *       'description'               => 'Super Deluxe Excellent Discount Package',
+ *       'card'                      => $card,
+ *   ));
+ *   $response = $transaction->send();
+ *   if ($response->isSuccessful()) {
+ *       echo "Purchase transaction was successful!\n";
+ *       $cardReference = $response->getCardReference();
+ *       echo "Card reference = " . $cardReference . "\n";
+ *   }
+ * </code>
+ *
+ * Once you have the cardReference it can be used in further transactions as
+ * follows:
+ *
+ * <code>
+ *   // Do a purchase transaction on the gateway
+ *   $transaction = $gateway->purchase(array(
+ *       'clientIp'                  => '127.0.0.1',
+ *       'amount'                    => '10.00',
+ *       'currency'                  => 'AUD',
+ *       'description'               => 'Super Deluxe Excellent Discount Package',
+ *       'cardReference'             => $cardReference,
+ *   ));
+ *   $response = $transaction->send();
+ *   if ($response->isSuccessful()) {
+ *       echo "Purchase transaction was successful!\n";
+ *       $sale_id = $response->getTransactionReference();
+ *       echo "Transaction reference = " . $sale_id . "\n";
+ *   }
+ * </code>
  *
  * ### Parameters
  *
@@ -84,17 +123,7 @@ namespace Omnipay\Multicards\Message;
  *
  * #### For credit card token payments
  *
- * Card token payments are not supported.
- *
- * #### For redirect payments
- *
- * These are not yet supported by this gateway plugin.
- *
- * * returnUrl         [required] - URL that the customer is sent to to notify of a successful payment
- * * cancelUrl         [required] - URL that the customer is sent to to notify of a failed payment
- * * billingCountry    [required]
- * * email             [required]
- * * billingPhone      [required]
+ * * cardReference     [required] - Credit card token
  *
  * ### Test Payments
  *
@@ -175,16 +204,17 @@ class PurchaseRequest extends AbstractRestRequest
     }
 
     /**
- * Get the user1 variable -- used in every purchase request
- * The user1 variable is an optional variable we can use to send
- * a value we needed to be returned during callbacks [IPN]
- * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
- *
- * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
- * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
- *
- * @return string
- */
+     * Get the user1 variable -- used in every purchase request
+     *
+     * The user1 variable is an optional variable we can use to send
+     * a value we needed to be returned during callbacks [IPN]
+     * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
+     *
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#silentpost_ipn
+     * https://www.multicards.com/en/support/merchant_integration_guide.html#morevariables
+     *
+     * @return string
+     */
     public function getUser1()
     {
         return $this->getParameter('user1');
@@ -192,6 +222,7 @@ class PurchaseRequest extends AbstractRestRequest
 
     /**
      * Set the user1 variable -- used in every purchase request
+     *
      * The user1 variable is an optional variable we can use to send
      * a value we needed to be returned during callbacks [IPN]
      * For this case, use2pay uses this to send the payment_id as identifier for it's callbacks.
@@ -208,6 +239,7 @@ class PurchaseRequest extends AbstractRestRequest
 
     /**
      * Get the user2 variable -- used in every purchase request
+     *
      * The user2 variable is an optional variable we can use to send
      * a value we needed to be returned during callbacks [IPN]
      * For this case, use2pay uses this to send the site_short_code as identifier for it's callbacks.
@@ -224,6 +256,7 @@ class PurchaseRequest extends AbstractRestRequest
 
     /**
      * Get the user2 variable -- used in every purchase request
+     *
      * The user2 variable is an optional variable we can use to send
      * a value we needed to be returned during callbacks [IPN]
      * For this case, use2pay uses this to send the site_short_code as identifier for it's callbacks.

@@ -191,8 +191,7 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
         $headers = [];
         // $headers = ['Accept' => 'application/json'];
 
-        // Guzzle HTTP Client createRequest does funny things when a GET request
-        // has attached data, so don't attach the data if the method is GET.
+        // Send the data as a GET or POST request with parameters.
         if ($this->getHttpMethod() == 'GET') {
             $httpRequest = $this->httpClient->createRequest(
                 $this->getHttpMethod(),

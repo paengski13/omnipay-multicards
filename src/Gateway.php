@@ -66,8 +66,8 @@ use Omnipay\Common\AbstractGateway;
  *
  * ### Quirks
  *
- * There is no createCard message in this gateway.  Token purchases are not
- * supported.
+ * There is no createCard message in this gateway.  Token purchases are supported,
+ * but a call to purchase() needs to be made in order to create a card token.
  *
  * Voids are not supported, only refunds are supported.
  *
@@ -209,6 +209,18 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\Multicards\Message\PurchaseRequest', $parameters);
+    }
+
+    /**
+     * Create an authorize request.
+     *
+     * @param array $parameters
+     * @return \Omnipay\Multicards\Message\AuthorizeRequest
+     */
+
+    public function authorize(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Multicards\Message\AuthorizeRequest', $parameters);
     }
 
     /**
