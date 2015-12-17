@@ -27,6 +27,14 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('10.00', $request->getAmount());
     }
 
+    public function testAuthorize()
+    {
+        $request = $this->gateway->authorize(array('amount' => '10.00'));
+
+        $this->assertInstanceOf('Omnipay\Multicards\Message\AuthorizeRequest', $request);
+        $this->assertSame('10.00', $request->getAmount());
+    }
+
     public function testRefund()
     {
         $request = $this->gateway->refund(array('amount' => '10.00'));
