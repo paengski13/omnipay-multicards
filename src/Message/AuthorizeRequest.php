@@ -33,7 +33,7 @@ class AuthorizeRequest extends PurchaseRequest
     public function getData()
     {
         $data = parent::getData();
-        $data['auth-only'] = 1;
+        $data['auth_only'] = 1;
         return $data;
     }
 }
