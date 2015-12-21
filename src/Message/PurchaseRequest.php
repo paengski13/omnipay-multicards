@@ -165,7 +165,7 @@ class PurchaseRequest extends AbstractRestRequest
         $data['item1_desc']         = $this->getDescription();
         $data['item1_price']        = $this->getAmount();
         $data['item1_qty']          = 1;
-        $data['rebill_amount']      = $this->getAmount();
+        // $data['rebill_amount']      = $this->getAmount();
         $data['valuta_code']        = $this->getCurrency();
         $data['user1']              = $this->getUser1();
         $data['user2']              = $this->getUser2();

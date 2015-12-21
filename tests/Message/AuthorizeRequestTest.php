@@ -32,7 +32,7 @@ class AuthorizeRequestTest extends TestCase
     public function testAuthIsTrue()
     {
         $data = $this->request->getData();
-        $this->assertEquals('1', $data['auth-only']);
+        $this->assertEquals('1', $data['auth_only']);
     }
 
     public function testSendSuccess()
