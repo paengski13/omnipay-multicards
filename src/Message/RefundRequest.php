@@ -18,18 +18,18 @@ namespace Omnipay\Multicards\Message;
  * See PurchaseRequest for the first part of this example transaction:
  *
  * <code>
- *   // Do a refund transaction on the gateway
- *   $transaction = $gateway->refund(array(
- *       'amount'                   => '10.00',
- *       'transactionReference'     => $sale_id,
- *       'description'              => 'Product out of stock',
- *   ));
- *   $response = $transaction->send();
- *   if ($response->isSuccessful()) {
- *       echo "Refund transaction was successful!\n";
- *       $refund_id = $response->getTransactionReference();
- *       echo "Transaction reference = " . $refund_id . "\n";
- *   }
+ * // Do a refund transaction on the gateway
+ * $transaction = $gateway->refund(array(
+ *     'amount'                   => '10.00',
+ *     'transactionReference'     => $sale_id,
+ *     'description'              => 'Product out of stock',
+ * ));
+ * $response = $transaction->send();
+ * if ($response->isSuccessful()) {
+ *     echo "Refund transaction was successful!\n";
+ *     $refund_id = $response->getTransactionReference();
+ *     echo "Transaction reference = " . $refund_id . "\n";
+ * }
  * </code>
  *
  * Quirks:

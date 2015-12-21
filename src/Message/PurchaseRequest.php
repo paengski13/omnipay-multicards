@@ -17,54 +17,54 @@ namespace Omnipay\Multicards\Message;
  * #### Set Up and Initialise Gateway
  *
  * <code>
- *   // Create a gateway for the MultiCards REST Gateway
- *   // (routes to GatewayFactory::create)
- *   $gateway = Omnipay::create('Multicards');
+ * // Create a gateway for the MultiCards REST Gateway
+ * // (routes to GatewayFactory::create)
+ * $gateway = Omnipay::create('Multicards');
  *
- *   // Initialise the gateway
- *   $gateway->initialize(array(
- *       'merId'     => '12341234',
- *       'password'  => 'thisISmyPASSWORD',
- *       'merUrlIdx' => 1,
- *       'testMode'  => true, // Or false when you are ready for live transactions
- *   ));
+ * // Initialise the gateway
+ * $gateway->initialize(array(
+ *     'merId'     => '12341234',
+ *     'password'  => 'thisISmyPASSWORD',
+ *     'merUrlIdx' => 1,
+ *     'testMode'  => true, // Or false when you are ready for live transactions
+ * ));
  * </code>
  *
  * #### Payment with Card Details
  *
  * <code>
- *   // Create a credit card object
- *   // This card can be used for testing.
- *   $card = new CreditCard(array(
- *               'firstName'             => 'Example',
- *               'lastName'              => 'Customer',
- *               'number'                => '4242424242424242',
- *               'expiryMonth'           => '01',
- *               'expiryYear'            => '2020',
- *               'cvv'                   => '123',
- *               'email'                 => 'customer@example.com',
- *               'billingAddress1'       => '1 Scrubby Creek Road',
- *               'billingCountry'        => 'AU',
- *               'billingCity'           => 'Scrubby Creek',
- *               'billingPostcode'       => '4999',
- *               'billingState'          => 'QLD',
- *               'billingPhone'          => '12341234',
- *   ));
+ * // Create a credit card object
+ * // This card can be used for testing.
+ * $card = new CreditCard(array(
+ *     'firstName'             => 'Example',
+ *     'lastName'              => 'Customer',
+ *     'number'                => '4242424242424242',
+ *     'expiryMonth'           => '01',
+ *     'expiryYear'            => '2020',
+ *     'cvv'                   => '123',
+ *     'email'                 => 'customer@example.com',
+ *     'billingAddress1'       => '1 Scrubby Creek Road',
+ *     'billingCountry'        => 'AU',
+ *     'billingCity'           => 'Scrubby Creek',
+ *     'billingPostcode'       => '4999',
+ *     'billingState'          => 'QLD',
+ *     'billingPhone'          => '12341234',
+ * ));
  *
- *   // Do a purchase transaction on the gateway
- *   $transaction = $gateway->purchase(array(
- *       'clientIp'                  => '127.0.0.1',
- *       'amount'                    => '10.00',
- *       'currency'                  => 'AUD',
- *       'description'               => 'Super Deluxe Excellent Discount Package',
- *       'card'                      => $card,
- *   ));
- *   $response = $transaction->send();
- *   if ($response->isSuccessful()) {
- *       echo "Purchase transaction was successful!\n";
- *       $sale_id = $response->getTransactionReference();
- *       echo "Transaction reference = " . $sale_id . "\n";
- *   }
+ * // Do a purchase transaction on the gateway
+ * $transaction = $gateway->purchase(array(
+ *     'clientIp'                  => '127.0.0.1',
+ *     'amount'                    => '10.00',
+ *     'currency'                  => 'AUD',
+ *     'description'               => 'Super Deluxe Excellent Discount Package',
+ *     'card'                      => $card,
+ * ));
+ * $response = $transaction->send();
+ * if ($response->isSuccessful()) {
+ *     echo "Purchase transaction was successful!\n";
+ *     $sale_id = $response->getTransactionReference();
+ *     echo "Transaction reference = " . $sale_id . "\n";
+ * }
  * </code>
  *
  * #### Payment with Card Token
@@ -74,40 +74,40 @@ namespace Omnipay\Multicards\Message;
  * the result of getCardReference on the response:
  *
  * <code>
- *   // Do a purchase transaction on the gateway
- *   $transaction = $gateway->purchase(array(
- *       'clientIp'                  => '127.0.0.1',
- *       'amount'                    => '10.00',
- *       'currency'                  => 'AUD',
- *       'description'               => 'Super Deluxe Excellent Discount Package',
- *       'card'                      => $card,
- *   ));
- *   $response = $transaction->send();
- *   if ($response->isSuccessful()) {
- *       echo "Purchase transaction was successful!\n";
- *       $cardReference = $response->getCardReference();
- *       echo "Card reference = " . $cardReference . "\n";
- *   }
+ * // Do a purchase transaction on the gateway
+ * $transaction = $gateway->purchase(array(
+ *     'clientIp'                  => '127.0.0.1',
+ *     'amount'                    => '10.00',
+ *     'currency'                  => 'AUD',
+ *     'description'               => 'Super Deluxe Excellent Discount Package',
+ *     'card'                      => $card,
+ * ));
+ * $response = $transaction->send();
+ * if ($response->isSuccessful()) {
+ *     echo "Purchase transaction was successful!\n";
+ *     $cardReference = $response->getCardReference();
+ *     echo "Card reference = " . $cardReference . "\n";
+ * }
  * </code>
  *
  * Once you have the cardReference it can be used in further transactions as
  * follows:
  *
  * <code>
- *   // Do a purchase transaction on the gateway
- *   $transaction = $gateway->purchase(array(
- *       'clientIp'                  => '127.0.0.1',
- *       'amount'                    => '10.00',
- *       'currency'                  => 'AUD',
- *       'description'               => 'Super Deluxe Excellent Discount Package',
- *       'cardReference'             => $cardReference,
- *   ));
- *   $response = $transaction->send();
- *   if ($response->isSuccessful()) {
- *       echo "Purchase transaction was successful!\n";
- *       $sale_id = $response->getTransactionReference();
- *       echo "Transaction reference = " . $sale_id . "\n";
- *   }
+ * // Do a purchase transaction on the gateway
+ * $transaction = $gateway->purchase(array(
+ *     'clientIp'                  => '127.0.0.1',
+ *     'amount'                    => '10.00',
+ *     'currency'                  => 'AUD',
+ *     'description'               => 'Super Deluxe Excellent Discount Package',
+ *     'cardReference'             => $cardReference,
+ * ));
+ * $response = $transaction->send();
+ * if ($response->isSuccessful()) {
+ *     echo "Purchase transaction was successful!\n";
+ *     $sale_id = $response->getTransactionReference();
+ *     echo "Transaction reference = " . $sale_id . "\n";
+ * }
  * </code>
  *
  * ### Parameters
