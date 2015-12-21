@@ -112,7 +112,7 @@ class Gateway extends AbstractGateway
      * password.  Merchant ID should be a 6 digit number.
      *
      * @param string $value
-     * @return AbstractRequest implements a fluent interface
+     * @return Gateway implements a fluent interface
      */
     public function setMerId($value)
     {
@@ -139,7 +139,7 @@ class Gateway extends AbstractGateway
      * password
      *
      * @param string $value
-     * @return AbstractRequest implements a fluent interface
+     * @return Gateway implements a fluent interface
      */
     public function setPassword($value)
     {
@@ -168,7 +168,7 @@ class Gateway extends AbstractGateway
      * page IDs in the Merchant Menu.
      *
      * @param string $value
-     * @return AbstractRequest implements a fluent interface
+     * @return Gateway implements a fluent interface
      */
     public function setMerUrlIdx($value)
     {
