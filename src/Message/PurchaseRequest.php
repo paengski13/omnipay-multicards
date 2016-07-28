@@ -184,7 +184,7 @@ class PurchaseRequest extends AbstractRestRequest
 
             /// Card data passed through
             $data['cust_name']          = $card->getName();
-            $data['cust_address1']      = $card->getBillingAddress1();
+            $data['cust_address1']      = $this->stripForbiddenAddressCharacters($card->getBillingAddress1());
             $data['cust_city']          = $card->getBillingCity();
             $data['cust_state']         = $card->getBillingState();
             $data['cust_zip']           = $card->getBillingPostcode();
@@ -203,6 +203,21 @@ class PurchaseRequest extends AbstractRestRequest
         }
 
         return $data;
+    }
+
+    /**
+     * Strip forbidden characters
+     *
+     * Multicards do not allow a list of characters in the address field "<>\"%"
+     * This will throw an invalid input error. To prevent that, we need to strip
+     * all forbidden characters.
+     *
+     * @param $value
+     * @return string
+     */
+    public function stripForbiddenAddressCharacters($value)
+    {
+        return preg_replace("/[<>\"%]/", "", $value);
     }
 
     /**
