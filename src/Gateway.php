@@ -1,6 +1,6 @@
 <?php
 /**
- * MultiCards Gateway
+ * MultiCards Gateway 
  */
 
 namespace Omnipay\Multicards;
