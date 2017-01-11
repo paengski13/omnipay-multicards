@@ -121,6 +121,17 @@ namespace Omnipay\Multicards\Message;
  *
  * * card              [required] - Credit card details as an Omnipay CreditCard object
  *
+ * MultiCards also internally use a pay_type parameter which is established from the
+ * card type.  The parameter has to be one of the following:
+ *
+ * * Visa
+ * * Visa Electron
+ * * Mastercard
+ * * Maestro
+ * * Eurocard
+ * * American Express
+ * * iDEAL
+ *
  * #### For credit card token payments
  *
  * * cardReference     [required] - Credit card token
@@ -165,6 +176,9 @@ class PurchaseRequest extends AbstractRestRequest
         $data['item1_desc']         = $this->getDescription();
         $data['item1_price']        = $this->getAmount();
         $data['item1_qty']          = 1;
+
+        $data = array_merge($data, $this->getItemData());
+
         // $data['rebill_amount']      = $this->getAmount();
         $data['valuta_code']        = $this->getCurrency();
         $data['user1']              = $this->getUser1();
@@ -200,6 +214,22 @@ class PurchaseRequest extends AbstractRestRequest
             // This requests a token_id to be returned with the response so that
             // the card reference can be used next time.
             $data['req_trans_token']    = '1';
+        }
+
+        return $data;
+    }
+
+    protected function getItemData()
+    {
+        $data = [];
+        $items = $this->getItems();
+        if ($items) {
+            foreach ($items as $n => $item) {
+                $n++;
+                $data["item{$n}_desc"] = $item->getDescription();
+                $data["item{$n}_price"] = $item->getAmount();
+                $data["item{$n}_qty"] = 1;
+            }
         }
 
         return $data;

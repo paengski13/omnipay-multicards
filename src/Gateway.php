@@ -244,4 +244,16 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\Multicards\Message\VoidRequest', $parameters);
     }
+
+    /**
+     * Create a completePurchase request.
+     *
+     * @param array $parameters
+     * @return \Omnipay\Multicards\Message\CompletePurchaseRequest
+     */
+
+    public function completePurchase(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Multicards\Message\CompletePurchaseRequest', $parameters);
+    }
 }
