@@ -5,6 +5,9 @@
 
 namespace Omnipay\Multicards\Message;
 
+use Omnipay\Common\ItemBag;
+use Omnipay\Multicards\MulticardsItemBag;
+
 /**
  * Multicards Abstract REST Request
  *
@@ -173,6 +176,30 @@ abstract class AbstractRestRequest extends \Omnipay\Common\Message\AbstractReque
             'client_ip'         => $this->getClientIp(),
         );
         return $data;
+    }
+
+    /**
+     * A list of items in this order
+     *
+     * @return ItemBag|null A bag containing items in this order
+     */
+    public function getItems()
+    {
+        return $this->getParameter('items');
+    }
+
+    /**
+     * Set the items in this order
+     *
+     * @param array $items An array of items in this order
+     */
+    public function setItems($items)
+    {
+        if ($items && !$items instanceof ItemBag) {
+            $items = new MulticardsItemBag($items);
+        }
+
+        return $this->setParameter('items', $items);
     }
 
     public function sendData($data)

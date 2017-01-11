@@ -17,6 +17,8 @@ use Omnipay\Common\Message\RequestInterface;
  */
 class RestResponse extends AbstractResponse
 {
+    const ERROR    = 1;
+    const REDIRECT = 4;
     protected $statusCode;
 
     public function __construct(RequestInterface $request, $data, $statusCode = 200)
@@ -32,7 +34,7 @@ class RestResponse extends AbstractResponse
             return false;
         }
 
-        if (! empty($this->data['response_code']) && $this->data['response_code'] > 1) {
+        if (! empty($this->data['response_code']) && $this->data['response_code'] > RestResponse::ERROR) {
             return false;
         }
 
@@ -45,6 +47,34 @@ class RestResponse extends AbstractResponse
         }
 
         return true;
+    }
+
+    /**
+     * To support Secure 3-D, changes are required that allow interaction with the customer.
+     * This interaction consists of redirecting the customer to a ACS server.
+     */
+    public function isRedirect()
+    {
+        return (isset($this->data['response_code']) && $this->data['response_code'] == RestResponse::REDIRECT);
+    }
+
+    public function getRedirectUrl()
+    {
+        if ($this->isRedirect() && ! empty($this->data['IssuerAuthRequestForm'])) {
+            return 'https://secure.multicards.com/cgi-bin/order2/poauto3d.pl' . '?' . http_build_query($this->getRedirectData());
+        }
+    }
+
+    public function getRedirectData()
+    {
+        if ($this->isRedirect()) {
+            return $this->data;
+        }
+    }
+
+    public function getRedirectMethod()
+    {
+        return 'GET';
     }
 
     public function getTransactionReference()
@@ -89,5 +119,13 @@ class RestResponse extends AbstractResponse
             return $this->data['response_code'];
         }
         return $this->statusCode;
+    }
+
+    public function getSessionId()
+    {
+        if (isset($this->data['PO3SessionID'])) {
+            return $this->data['PO3SessionID'];
+        }
+        return null;
     }
 }
